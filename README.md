@@ -5,4 +5,4 @@ This repository provides code for bypassing the anti-cheat system in Honkai Star
 * Now the dll completely skips all ACE security initialization
 
 # Known Issues
-mono doesn't work in the cheat engine (I'll fix it soon)
+mono doesn't work in the cheat engine (I'll fix it soon) (*FIXED*)
