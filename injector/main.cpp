@@ -26,10 +26,8 @@ vector<unsigned char> load_file(const string& filename) {
 
 int main() try {
 	auto data = load_file("star-rail-ace.dll");
-
 	char szFile[MAX_PATH] = { 0 };
 	DWORD bytesRead = GetPrivateProfileStringA("Paths", "StarRailPath", "", szFile, MAX_PATH, "sr-injector.ini");
-
 	if (bytesRead == 0) {
 		OPENFILENAME ofn;
 		ZeroMemory(&ofn, sizeof(ofn));
@@ -45,26 +43,15 @@ int main() try {
 
 		WritePrivateProfileStringA("Paths", "StarRailPath", szFile, "sr-injector.ini");
 	}
-
 	STARTUPINFOA si;
 	PROCESS_INFORMATION pi;
-
 	ZeroMemory(&si, sizeof(si));
 	si.cb = sizeof(si);
-<<<<<<< HEAD
-
-=======
->>>>>>> 7ee25e0 (mono bug fix)
 	ZeroMemory(&pi, sizeof(pi));
 
 	if (!CreateProcessA(NULL, szFile, NULL, NULL, FALSE, CREATE_SUSPENDED, NULL, NULL, &si, &pi))
 		throw std::runtime_error("unable to launch starrail.exe");
-
-<<<<<<< HEAD
-=======
-	system("pause");
-
->>>>>>> 7ee25e0 (mono bug fix)
+	
 	if (!inject::ManualMapDll(pi.hProcess, data.data(), data.size()))
 		throw std::runtime_error("unable to inject dll");
 
@@ -73,10 +60,6 @@ int main() try {
 	CloseHandle(pi.hThread);
 	return 0;
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> 7ee25e0 (mono bug fix)
 catch (std::runtime_error& err) {
 	MessageBoxA(0, err.what(), "Fatal error", 0);
 	return -1;
