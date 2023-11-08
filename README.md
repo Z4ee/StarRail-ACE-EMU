@@ -6,4 +6,5 @@ This repository provides code for bypassing the anti-cheat system in Honkai Star
 
 # Known Issues
 ~mono doesn't work in the cheat engine~
+
 need update for the Chinese version of the game
