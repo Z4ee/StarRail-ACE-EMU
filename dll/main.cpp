@@ -17,7 +17,7 @@ HMODULE hk_loadlibraryexw(LPCWSTR lpLibFileName, HANDLE hFile, DWORD dwFlags) tr
 			throw std::runtime_error("unable to load resource");
 
 		auto data = reinterpret_cast<uint8_t*>(LockResource(h_data));
-		globals::setup_vm(encoded_base, 0xC954000, 0xC887, data, data + 0xB1F9);
+		globals::setup_vm(encoded_base, 0xCF64000, 0xD519, data, data + 0xBBFB);
 		delete[] encoded_base;
 		FreeResource(h_data);
 	}
