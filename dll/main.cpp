@@ -1,5 +1,9 @@
 #include "main.h"
 
+BOOL hk_showwindow(HWND hWnd, int nCmdShow) {
+	return true;
+}
+
 HMODULE hk_loadlibraryexw(LPCWSTR lpLibFileName, HANDLE hFile, DWORD dwFlags) try {
 	auto ret = reinterpret_cast<HMODULE>(globals::loadlibraryexw(lpLibFileName, hFile, dwFlags));
 	if (lpLibFileName && ret && lstrlenW(lpLibFileName) == 16 && lstrcmpW(lpLibFileName, L"GameAssembly.dll") == 0) {
@@ -36,6 +40,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
 
 		globals::h_module = hModule;
 		globals::create_hook(&globals::loadlibraryexw, hk_loadlibraryexw);
+		globals::create_hook(&globals::showwindow, hk_showwindow);
 
 		auto addr = reinterpret_cast<unsigned char*>(reinterpret_cast<uint64_t>(globals::h_starrail) + 0xA6B3E); // starrail.exe entry point
 		*reinterpret_cast<DWORD*>(addr + 0x6) = 0;
