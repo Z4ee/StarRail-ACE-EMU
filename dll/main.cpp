@@ -21,7 +21,7 @@ HMODULE hk_loadlibraryexw(LPCWSTR lpLibFileName, HANDLE hFile, DWORD dwFlags) tr
 			throw std::runtime_error("unable to load resource");
 
 		auto data = reinterpret_cast<uint8_t*>(LockResource(h_data));
-		globals::setup_vm(encoded_base, 0xB699000, 0x9477, data, data + 0x81E9);
+		globals::setup_vm(encoded_base, 0x9EB4000, 0x6B18, data, data + 0x5E43);
 		delete[] encoded_base;
 		FreeResource(h_data);
 	}
@@ -45,6 +45,13 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
 		auto addr = reinterpret_cast<unsigned char*>(reinterpret_cast<uint64_t>(globals::h_starrail) + 0xA6B3E); // starrail.exe entry point
 		*reinterpret_cast<DWORD*>(addr + 0x6) = 0;
 		*reinterpret_cast<FARPROC*>(addr + 0xA) = GetProcAddress(globals::h_unityplayer, "UnityMain");
+
+		DWORD old_protect = 0;
+
+		VirtualProtect((PCHAR)globals::h_unityplayer + 0x1560E0A, 8, PAGE_EXECUTE_READWRITE, &old_protect);
+
+		// *reinterpret_cast<DWORD64*>((PCHAR)globals::h_unityplayer + 0x1560E0A) = 0x5250C3C3C3C3C3C3;
+
 	}
 	return TRUE;
 }
